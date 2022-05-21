@@ -45,6 +45,9 @@ export default defineConfig({
   server: {
     host: pkg.env.VITE_DEV_SERVER_HOST,
     port: pkg.env.VITE_DEV_SERVER_PORT,
+    fs: {
+      allow: ['..', '/Users/ravindra/projects/']
+    }
   },
 })
 

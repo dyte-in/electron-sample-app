@@ -1,12 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import DyteClient from "@dyte-in/client-core";
 import { DyteMeeting } from "@dyte-in/react-ui-kit";
-import { DyteElectronStore } from "@dyte-in/electron-store";
-import Login from "./Login";
 
 const App = () => {
-  const [authToken, setAuthToken] = useState<string | null>(null);
-  const [roomName, setRoomName] = useState<string | null>(null);
+  const [roomName, setRoomName] = useState<string | null>('omgaev-kvcyxj');
+  const [env, setEnv] = useState<string>('staging');
   const [defaults, setDefaults] = useState<{
     audio: boolean;
     video: boolean;
@@ -18,31 +16,24 @@ const App = () => {
   });
   const [activeMeeting, setActiveMeeting] = useState(false);
 
-  const handleJoin = useCallback(async () => {
+  const handleJoin = async () => {
     if (!roomName || roomName.trim().length === 0) return;
-    if (!authToken || authToken.trim().length === 0) return;
+
+    const res = await fetch(`https://api.${env}.dyte.in/auth/anonymous`);
+    if (!res.ok) {
+      return;
+    }
+
+    const authToken = (await res.json()).authToken;
 
     window.meeting = await DyteClient.init({
       roomName,
-      apiBase: 'https://api.staging.dyte.in/',
+      apiBase: `https://api.${env}.dyte.in/`,
       authToken,
       defaults,
     });
     setActiveMeeting(true);
-  }, [roomName, authToken, defaults]);
-
-  useEffect(() => {
-    async function fetchMyAPI() {
-      if (!authToken) {
-        setAuthToken(await DyteElectronStore.get('authToken'));
-      }
-    }
-    fetchMyAPI();
-  }, [authToken]);
-
-  if (!authToken) {
-    return <Login onLogin={(token: string) => setAuthToken(token)} />;
-  }
+  };
 
   if (!activeMeeting) {
     return (
@@ -51,8 +42,13 @@ const App = () => {
         <div className="meeting-form">
           <input
             type="text"
+            value={roomName as string}
             onChange={(e) => setRoomName(e.currentTarget.value)}
           />
+          <select name="env" value={env} onChange={(e) => setEnv(e.target.value)}>
+            <option value="staging">Staging</option>
+            <option value="cluster">Prod</option>
+          </select>
           <button type="submit" onClick={() => handleJoin()}>
             Join meeting
           </button>
