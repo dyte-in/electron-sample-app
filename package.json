@@ -15,7 +15,7 @@
     "node": ">=14.17.0"
   },
   "dependencies": {
-    "@dyte-in/client-core": "file:../web-core",
+    "@dyte-in/client-core": "0.22.0-feat-remote-control.6",
     "@dyte-in/electron-main": "file:../electron-sdk/packages/main",
     "@dyte-in/electron-preload": "file:../electron-sdk/packages/preload",
     "@dyte-in/react-ui-kit": "file:../ui-kit/packages/react-library",
