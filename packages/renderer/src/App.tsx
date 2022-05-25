@@ -68,7 +68,7 @@ const App = () => {
         display:'flex',
         alignItems: 'center',
         justifyContent: 'center'
-      }}>Loading...</div>
+      }}><dyte-spinner></dyte-spinner></div>
     }
     return (
       <div className="home" style={{display: 'none'}}>
