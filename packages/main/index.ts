@@ -49,12 +49,7 @@ async function createWindow() {
   })
 }
 
-function onShowMenu(items: DyteMenuItem[]) {
-  const menu = Menu.buildFromTemplate(items);
-  menu.popup();
-}
-
-DyteElectron.init(ipcMain, desktopCapturer, onShowMenu);
+DyteElectron.init(ipcMain, desktopCapturer);
 
 app.whenReady().then(createWindow)
 
