@@ -2,7 +2,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  "appId": "YourAppID",
+  "appId": "com.dyte.electron-react",
   "productName": "Dyte",
   "copyright": "Copyright © 2022 ${author}",
   "asar": true,
