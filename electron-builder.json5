@@ -33,9 +33,11 @@
         "NSMicrophoneUsageDescription": "Dyte needs access to your microphone for conducting meetings.",
         "NSCameraUsageDescription": "Dyte needs access to your camera for conducting meetings.",
         "NSScreenCaptureDescription": "Dyte needs access to your screen for conducting meetings.",
-        "com.apple.security.device.audio-input": true,
-        "com.apple.security.device.camera": true,
-        "com.apple.security.cs.allow-unsigned-executable-memory": true
+        "com.apple.security.device.audio-input": "Dyte needs access to your microphone for conducting meetings.",
+        "com.apple.security.device.camera": "Dyte needs access to your camera for conducting meetings.",
+        "com.apple.screencapture" : "Dyte needs access to your screen for interactive meetings."
+        "com.apple.security.cs.allow-unsigned-executable-memory": true,
+        "com.apple.quarantine" : false,
       }
   },
   "linux": {
