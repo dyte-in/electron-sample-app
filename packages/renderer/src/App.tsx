@@ -4,7 +4,7 @@ import { DyteMeeting } from "@dyte-in/react-ui-kit";
 import { provideDyteDesignSystem } from '@dyte-in/ui-kit';
 
 const App = () => {
-  const [roomName, setRoomName] = useState<string | null>('omgaev-kvcyxj');
+  const [roomName, setRoomName] = useState<string | null>('mbbvwh-qrmfqu');
   const [env, setEnv] = useState<string>('staging');
   const [defaults, setDefaults] = useState<{
     audio: boolean;
