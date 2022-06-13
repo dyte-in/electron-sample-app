@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import DyteClient from "@dyte-in/client-core";
+import DyteClient from "@dytesdk/web-core/inlined";
 import { DyteMeeting } from "@dyte-in/react-ui-kit";
 import { provideDyteDesignSystem } from '@dyte-in/ui-kit';
 

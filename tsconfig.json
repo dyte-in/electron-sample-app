@@ -7,10 +7,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Node16",
     "resolveJsonModule": true,
     "strict": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
   "include": [
     "./**/*"
