@@ -9,7 +9,12 @@
   "main": "dist/main/index.cjs",
   "scripts": {
     "dev": "node scripts/watch.mjs",
-    "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --linux --x64"
+    "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --linux --x64",
+    "prepare": "is-ci || husky install",
+    "lint": "prettier --check '**/packages/**/*.{ts,tsx,js,css,html,json}'",
+    "lint:fix": "prettier --write '**/packages/**/*.{ts,tsx,js,css,html,json}'",
+    "semantic-release": "lerna exec --concurrency 1 -- npx --no-install semantic-release",
+    "format": "prettier --write '**/packages/**/*.{ts,tsx,js,css,html,json}'"
   },
   "engines": {
     "node": ">=16.13.2"
@@ -38,7 +43,23 @@
     "vite": "^2.9.9",
     "vite-plugin-esmodule": "^1.2.5",
     "vite-plugin-optimizer": "^1.3.3",
-    "vite-plugin-resolve": "^2.0.4"
+    "vite-plugin-resolve": "^2.0.4",
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@stencil/store": "^1.5.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^7.0.0",
+    "is-ci": "^3.0.1",
+    "prettier": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.1.4",
+    "semantic-release": "^19.0.2",
+    "semantic-release-monorepo": "^7.0.5"
   },
   "env": {
     "VITE_DEV_SERVER_HOST": "127.0.0.1",

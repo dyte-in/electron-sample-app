@@ -1,6 +1,6 @@
-import type { IpcRenderer } from "electron";
-import type fs from "fs";
-export { }
+import type { IpcRenderer } from 'electron';
+import type fs from 'fs';
+export {};
 
 declare global {
   interface Window {

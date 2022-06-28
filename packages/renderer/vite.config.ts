@@ -1,10 +1,10 @@
-import { join } from 'path'
-import { builtinModules } from 'module'
-import { defineConfig, Plugin } from 'vite'
-import react from '@vitejs/plugin-react'
-import optimizer from 'vite-plugin-optimizer'
-import resolve from 'vite-plugin-resolve'
-import pkg from '../../package.json'
+import { join } from 'path';
+import { builtinModules } from 'module';
+import { defineConfig, Plugin } from 'vite';
+import react from '@vitejs/plugin-react';
+import optimizer from 'vite-plugin-optimizer';
+import resolve from 'vite-plugin-resolve';
+import pkg from '../../package.json';
 
 /**
  * @see https://vitejs.dev/config/
@@ -46,19 +46,17 @@ export default defineConfig({
     host: pkg.env.VITE_DEV_SERVER_HOST,
     port: pkg.env.VITE_DEV_SERVER_PORT,
     fs: {
-      allow: ['..', '/Users/ravindra/projects/']
-    }
+      allow: ['..', '/Users/ravindra/projects/'],
+    },
   },
-})
+});
 
 /**
  * For usage of Electron and NodeJS APIs in the Renderer process
  * @see https://github.com/caoxiemeihao/electron-vue-vite/issues/52
  */
-export function electron(
-  entries: Parameters<typeof optimizer>[0] = {}
-): Plugin {
-  const builtins = builtinModules.filter((t) => !t.startsWith('_'))
+export function electron(entries: Parameters<typeof optimizer>[0] = {}): Plugin {
+  const builtins = builtinModules.filter((t) => !t.startsWith('_'));
 
   /**
    * @see https://github.com/caoxiemeihao/vite-plugins/tree/main/packages/resolve#readme
@@ -67,7 +65,7 @@ export function electron(
     electron: electronExport(),
     ...builtinModulesExport(builtins),
     ...entries,
-  })
+  });
 
   function electronExport() {
     return `
@@ -99,29 +97,29 @@ export {
   desktopCapturer,
   deprecate,
 }
-`
+`;
   }
 
   function builtinModulesExport(modules: string[]) {
     return modules
       .map((moduleId) => {
-        const nodeModule = require(moduleId)
-        const requireModule = `const M = require("${moduleId}");`
-        const exportDefault = `export default M;`
+        const nodeModule = require(moduleId);
+        const requireModule = `const M = require("${moduleId}");`;
+        const exportDefault = `export default M;`;
         const exportMembers =
           Object.keys(nodeModule)
             .map((attr) => `export const ${attr} = M.${attr}`)
-            .join(';\n') + ';'
+            .join(';\n') + ';';
         const nodeModuleCode = `
 ${requireModule}
 
 ${exportDefault}
 
 ${exportMembers}
-`
+`;
 
-        return { [moduleId]: nodeModuleCode }
+        return { [moduleId]: nodeModuleCode };
       })
-      .reduce((memo, item) => Object.assign(memo, item), {})
+      .reduce((memo, item) => Object.assign(memo, item), {});
   }
 }

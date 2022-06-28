@@ -4,14 +4,14 @@ import { DyteElectronRenderer } from '@dyte-in/electron-preload';
 import { domReady } from './utils';
 import { useLoading } from './loading';
 
-const { appendLoading, removeLoading } = useLoading()
+const { appendLoading, removeLoading } = useLoading();
 
-;(async () => {
-  await domReady()
+(async () => {
+  await domReady();
 
-  appendLoading()
-})()
+  appendLoading();
+})();
 
-contextBridge.exposeInMainWorld('removeLoading', removeLoading)
+contextBridge.exposeInMainWorld('removeLoading', removeLoading);
 
 DyteElectronRenderer.init(contextBridge, ipcRenderer);
