@@ -39,7 +39,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
           ENVIRONMENT: ${{ github.ref }}
           GHR: true
-        run: npx semantic-release
+        run: npm run semantic-release
 
       - name: Update staging branch
         if: |
