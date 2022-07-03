@@ -89,30 +89,7 @@ Once `dev` or `build` npm-script is executed, the `dist` folder will be generate
 - **packages/preload/index.ts**
 
     ```typescript
-    import fs from "fs"
     import { contextBridge, ipcRenderer } from "electron"
-
-    // --------- Expose some API to Renderer-process. ---------
-    contextBridge.exposeInMainWorld("fs", fs)
-    contextBridge.exposeInMainWorld("ipcRenderer", ipcRenderer)
-    ```
-
-- **packages/renderer/src/global.d.ts**
-
-    ```typescript
-    // Defined in the window
-    interface Window {
-      fs: typeof import("fs")
-      ipcRenderer: import("electron").IpcRenderer
-    }
-    ```
-
-- **packages/renderer/src/main.ts**
-
-    ```typescript
-    // Use Electron and NodeJS API in the Renderer-process
-    console.log("fs", window.fs)
-    console.log("ipcRenderer", window.ipcRenderer)
     ```
 
 ## Use SerialPort, SQLite3, or other node-native addons in the Main-process

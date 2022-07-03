@@ -102,30 +102,10 @@ electron-builder 打包时候会将 dependencies 中的包打包到 app.asar 里
 * **packages/preload/index.ts**
 
   ```typescript
-  import fs from 'fs'
   import { contextBridge, ipcRenderer } from 'electron'
 
   // --------- Expose some API to Renderer-process. ---------
-  contextBridge.exposeInMainWorld('fs', fs)
   contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer)
-  ```
-
-* **packages/renderer/src/global.d.ts**
-
-  ```typescript
-  // Defined on the window
-  interface Window {
-    fs: typeof import('fs')
-    ipcRenderer: import('electron').IpcRenderer
-  }
-  ```
-
-* **packages/renderer/main.ts**
-
-  ```typescript
-  // Use Electron, NodeJs API in Renderer-process
-  console.log('fs', window.fs)
-  console.log('ipcRenderer', window.ipcRenderer)
   ```
 
 **如果你真的在这个模板中开启了 `nodeIntegration: true` `contextIsolation: false` 我不拦着  

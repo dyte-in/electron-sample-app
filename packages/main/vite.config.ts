@@ -1,19 +1,15 @@
-import { builtinModules } from 'module'
-import { defineConfig } from 'vite'
-import esmodule from 'vite-plugin-esmodule'
-import pkg from '../../package.json'
+import { builtinModules } from 'module';
+import { defineConfig } from 'vite';
+import esmodule from 'vite-plugin-esmodule';
+import pkg from '../../package.json';
 
 export default defineConfig({
   root: __dirname,
-  plugins: [
-    esmodule([
-      'execa',
-    ]),
-  ],
+  plugins: [esmodule(['execa'])],
   build: {
     outDir: '../../dist/main',
     emptyOutDir: true,
-    minify: process.env./* from mode option */NODE_ENV === 'production',
+    minify: process.env./* from mode option */ NODE_ENV === 'production',
     sourcemap: true,
     lib: {
       entry: 'index.ts',
@@ -21,11 +17,7 @@ export default defineConfig({
       fileName: () => '[name].cjs',
     },
     rollupOptions: {
-      external: [
-        'electron',
-        ...builtinModules,
-        ...Object.keys(pkg.dependencies || {}),
-      ],
+      external: ['electron', ...builtinModules, ...Object.keys(pkg.dependencies || {})],
     },
   },
-})
+});
