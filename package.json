@@ -9,7 +9,7 @@
   "main": "dist/main/index.cjs",
   "scripts": {
     "dev": "node scripts/watch.mjs",
-    "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --linux --x64",
+    "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --win",
     "prepare": "is-ci || husky install",
     "lint": "prettier --check '**/packages/**/*.{ts,tsx,js,css,html,json}'",
     "lint:fix": "prettier --write '**/packages/**/*.{ts,tsx,js,css,html,json}'",
