@@ -34,6 +34,9 @@ jobs:
           GH_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
         run: npm run build
 
+      - name: Build confirmation
+        run: echo "Successfully generated the bundle."
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
