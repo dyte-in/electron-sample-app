@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import DyteClient from '@dytesdk/web-core/inlined';
-import { DyteMeeting } from '@dyte-in/react-ui-kit';
-import { provideDyteDesignSystem } from '@dyte-in/ui-kit';
+import { DyteMeeting } from '@dytesdk/react-ui-kit';
+import { provideDyteDesignSystem } from '@dytesdk/ui-kit';
 
 const App = () => {
   const [roomName, setRoomName] = useState<string | null>('rpwont-hgsesv');

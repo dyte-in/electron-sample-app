@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { contextBridge, ipcRenderer } from 'electron';
-import { DyteElectronRenderer } from '@dyte-in/electron-preload';
+import { DyteElectronRenderer } from '@dytesdk/electron-preload';
 import { domReady } from './utils';
 import { useLoading } from './loading';
 

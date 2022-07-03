@@ -1,8 +1,8 @@
 import { app, BrowserWindow, desktopCapturer, ipcMain, shell, Menu } from 'electron';
 import { release } from 'os';
 import { join } from 'path';
-import { DyteElectron } from '@dyte-in/electron-main';
-import type { DyteMenuItem } from '@dyte-in/electron-main';
+import { DyteElectron } from '@dytesdk/electron-main';
+import type { DyteMenuItem } from '@dytesdk/electron-main';
 import './samples/electron-store';
 import './samples/npm-esm-packages';
 

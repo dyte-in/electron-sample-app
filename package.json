@@ -20,12 +20,11 @@
     "node": ">=16.13.2"
   },
   "dependencies": {
-    "@dyte-in/client-core": "0.26.0",
-    "@dyte-in/electron-main": "file:../electron-sdk/packages/main",
-    "@dyte-in/electron-preload": "file:../electron-sdk/packages/preload",
-    "@dyte-in/react-ui-kit": "file:../ui-kit/packages/react-library",
-    "@dyte-in/ui-kit": "file:../ui-kit/packages/core",
-    "@dytesdk/web-core": "0.26.0",
+    "@dytesdk/web-core": "^0.28.2",
+    "@dytesdk/electron-main": "^1.0.0",
+    "@dytesdk/electron-preload": "^1.0.0",
+    "@dytesdk/react-ui-kit": "^1.15.0",
+    "@dytesdk/ui-kit": "^1.15.0",
     "@nut-tree/nut-js": "^2.1.0",
     "electron-store": "^8.0.1"
   },

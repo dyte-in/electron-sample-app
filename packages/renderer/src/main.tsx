@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { defineCustomElements } from '@dyte-in/ui-kit/loader';
+import { defineCustomElements } from '@dytesdk/ui-kit/loader';
 import App from './App';
 import './styles/index.css';
 
