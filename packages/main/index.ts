@@ -2,8 +2,6 @@ import { app, BrowserWindow, desktopCapturer, ipcMain, shell, Menu } from 'elect
 import { release } from 'os';
 import { join } from 'path';
 import { DyteElectron } from '@dytesdk/electron-main';
-import type { DyteMenuItem } from '@dytesdk/electron-main';
-import './samples/electron-store';
 import './samples/npm-esm-packages';
 
 // Disable GPU Acceleration for Windows 7
