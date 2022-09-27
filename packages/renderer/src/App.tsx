@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import '@dytesdk/web-core/inlined';
 import { DyteMeeting } from '@dytesdk/react-ui-kit';
 import { provideDyteDesignSystem } from '@dytesdk/ui-kit';
+import DyteClient from '@dytesdk/web-core/inlined';
 
 const App = () => {
   const [roomName, setRoomName] = useState<string | null>('rpwont-hgsesv');
@@ -26,7 +26,7 @@ const App = () => {
     }
     const authToken = (await res.json()).authToken;
 
-    window.meeting = await window.DyteClient.init({
+    window.meeting = await DyteClient.init({
       roomName,
       apiBase: `https://api.${env}.dyte.in/`,
       authToken,
