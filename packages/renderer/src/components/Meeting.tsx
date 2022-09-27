@@ -33,5 +33,5 @@ export default function Meeting({ authToken, roomName, setAction }: Props) {
     })();
   }, []);
 
-  return <DyteMeeting meeting={meeting} showSetupScreen />;
+  return <DyteMeeting meeting={meeting!} showSetupScreen />;
 }
