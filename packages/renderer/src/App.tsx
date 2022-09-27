@@ -20,7 +20,11 @@ function MeetingCreate({ setAction }: CommonProps) {
 
         const data = await createMeeting({ title: values.title });
         if (data) {
-          const authToken = await addParticipant({ ...data, displayName: values.name });
+          const authToken = await addParticipant({
+            ...data,
+            displayName: values.name,
+            clientSpecificId: values.name + '-' + Math.random().toString(32).substring(2),
+          });
           if (authToken) {
             setAction({
               type: 'meeting',
@@ -73,6 +77,7 @@ function MeetingJoin({ setAction }: CommonProps) {
         const authToken = await addParticipant({
           roomName: values.roomName,
           displayName: values.name,
+          clientSpecificId: values.name + '-' + Math.random().toString(32).substring(2),
         });
 
         if (authToken) {

@@ -1,4 +1,5 @@
-const API_BASE = 'https://staging.dyte.io';
+export const ENV: 'staging' | 'app' = 'staging';
+const API_BASE = `https://${ENV}.dyte.io`;
 
 interface MeetingCreateForm {
   title: string;
@@ -70,7 +71,7 @@ const addParticipant = async ({
   });
 
   if (!res.ok) {
-    alert(`Something went wrong while creating a meeting. \nTry again in some time.`);
+    alert(`Something went wrong while adding participant. \nTry again in some time.`);
     return null;
   }
 
