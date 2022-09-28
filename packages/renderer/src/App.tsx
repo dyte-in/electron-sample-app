@@ -26,7 +26,7 @@ const App = () => {
     }
     const authToken = (await res.json()).authToken;
 
-    window.meeting = await DyteClient.init({
+    window.meeting = await (DyteClient.init || window.DyteClient.init)({
       roomName,
       apiBase: `https://api.${env}.dyte.in/`,
       authToken,
