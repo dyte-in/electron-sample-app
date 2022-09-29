@@ -20,7 +20,7 @@ export default function Meeting({ authToken, roomName, setAction }: Props) {
   useEffect(() => {
     (async () => {
       if (!runOnce.current) {
-        const m = await DyteClient.init({
+        const m = await (DyteClient.init || window.DyteClient.init)({
           roomName,
           authToken,
           defaults: { audio: false, video: false },

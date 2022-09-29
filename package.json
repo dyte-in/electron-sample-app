@@ -9,7 +9,10 @@
   "main": "dist/main/index.cjs",
   "scripts": {
     "dev": "node scripts/watch.mjs",
-    "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --publish never",
+    "build": "npm run build:mac",
+    "build:mac": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --publish never --mac",
+    "build:linux": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --publish never --linux",
+    "build:windows": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder --publish never --win --x64",
     "prepare": "is-ci || husky install",
     "lint": "prettier --check '**/packages/**/*.{ts,tsx,js,css,html,json}'",
     "lint:fix": "prettier --write '**/packages/**/*.{ts,tsx,js,css,html,json}'",
@@ -20,15 +23,13 @@
     "node": ">=16.13.2"
   },
   "dependencies": {
-    "@dytesdk/electron-main": "^1.0.0",
-    "@dytesdk/electron-preload": "^1.0.0",
-    "@dytesdk/react-ui-kit": "^1.15.0",
-    "@dytesdk/react-web-core": "^1.10.4",
-    "@dytesdk/ui-kit": "^1.15.0",
-    "@dytesdk/web-core": "^0.28.2",
-    "@nut-tree/nut-js": "^2.1.0",
-    "clsx": "^1.2.1",
-    "electron-store": "^8.0.1"
+    "@dytesdk/web-core": "0.39.5-staging.7",
+    "@dytesdk/electron-main": "^1.0.3",
+    "@dytesdk/electron-preload": "^1.0.3",
+    "@dytesdk/react-ui-kit": "1.32.0-staging.3",
+    "@dytesdk/ui-kit": "1.32.0-staging.3",
+    "@nut-tree/nut-js": "^2.3.0",
+    "clsx": "^1.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
@@ -46,7 +47,7 @@
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "electron": "18.2.0",
-    "electron-builder": "^23.0.3",
+    "electron-builder": "^23.3.3",
     "execa": "^6.1.0",
     "husky": "^7.0.0",
     "is-ci": "^3.0.1",
