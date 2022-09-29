@@ -19,6 +19,6 @@
   }
 
   button[type='submit'] {
-    @apply bg-zinc-800 text-zinc-100 h-10 rounded-md;
+    @apply h-10 rounded-md bg-zinc-800 text-zinc-100;
   }
 }
