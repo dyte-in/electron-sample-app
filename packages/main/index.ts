@@ -1,4 +1,4 @@
-import { app, BrowserWindow, desktopCapturer, ipcMain, shell, Menu } from 'electron';
+import { app, BrowserWindow, desktopCapturer, ipcMain, shell, Menu, session } from 'electron';
 import { release } from 'os';
 import { join } from 'path';
 import { DyteElectron } from '@dytesdk/electron-main';
@@ -50,6 +50,19 @@ async function createWindow() {
 }
 
 DyteElectron.init(ipcMain, desktopCapturer);
+
+app.on('ready', () => {
+  const filter = {
+    urls: ['*://app.dyte.io/*'],
+  };
+
+  session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
+    console.log(details);
+    details.requestHeaders['Origin'] = 'https://app.dyte.io';
+    details.requestHeaders['Referer'] = 'https://app.dyte.io';
+    callback({ requestHeaders: details.requestHeaders });
+  });
+});
 
 app.whenReady().then(createWindow);
 
