@@ -24,7 +24,7 @@ export default function Meeting({ authToken, roomName, setAction }: Props) {
           roomName,
           authToken,
           defaults: { audio: false, video: false },
-          apiBase: `https://api.${ENV === 'app' ? 'cluster' : 'staging'}.dyte.io`,
+          apiBase: `https://api.${ENV === 'app' ? 'cluster' : 'staging'}.dyte.in`,
         });
         setMeeting(m);
 
