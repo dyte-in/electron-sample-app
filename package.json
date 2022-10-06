@@ -24,11 +24,11 @@
     "node": ">=16.13.2"
   },
   "dependencies": {
-    "@dytesdk/web-core": "0.39.5-staging.7",
+    "@dytesdk/web-core": "0.40.0",
     "@dytesdk/electron-main": "^1.0.3",
     "@dytesdk/electron-preload": "^1.0.3",
-    "@dytesdk/react-ui-kit": "1.32.0-staging.3",
-    "@dytesdk/ui-kit": "1.32.0-staging.3",
+    "@dytesdk/react-ui-kit": "1.32.0",
+    "@dytesdk/ui-kit": "1.32.0",
     "@nut-tree/nut-js": "^2.3.0",
     "clsx": "^1.2.1"
   },
