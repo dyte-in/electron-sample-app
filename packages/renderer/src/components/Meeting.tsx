@@ -35,5 +35,27 @@ export default function Meeting({ authToken, roomName, setAction }: Props) {
     })();
   }, []);
 
-  return <DyteMeeting meeting={meeting!} showSetupScreen />;
+  const url = `https://${ENV}.dyte.io/${roomName}`;
+
+  return (
+    <div className="box-border flex h-full w-full flex-col bg-black">
+      <header className="flex items-center justify-center border-b border-zinc-800 bg-black px-6 py-2 text-zinc-200">
+        <a
+          href={url}
+          onClick={() => {
+            (window as any).openLinkInBrowser(url);
+          }}
+          className="text-sm underline-offset-2 hover:underline"
+        >
+          {url}
+        </a>
+      </header>
+      <DyteMeeting
+        mode="fill"
+        meeting={meeting!}
+        showSetupScreen
+        className="box-border flex-grow"
+      />
+    </div>
+  );
 }
