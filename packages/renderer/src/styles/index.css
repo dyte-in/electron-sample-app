@@ -1,11 +1,24 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+@layer base {
+  body {
+    @apply text-zinc-900 antialiased;
+  }
+
+  form h2 {
+    @apply my-4 text-center text-xl font-bold;
+  }
+  .form-group {
+    @apply mb-3 flex flex-col gap-1;
+  }
+
+  form input {
+    @apply h-10 rounded-md bg-zinc-200 px-3;
+  }
+
+  button[type='submit'] {
+    @apply h-10 rounded-md bg-zinc-800 text-zinc-100;
+  }
 }

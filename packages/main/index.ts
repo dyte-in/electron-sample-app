@@ -1,9 +1,7 @@
-import { app, BrowserWindow, desktopCapturer, ipcMain, shell, Menu } from 'electron';
+import { app, BrowserWindow, desktopCapturer, ipcMain, shell, Menu, session } from 'electron';
 import { release } from 'os';
 import { join } from 'path';
 import { DyteElectron } from '@dytesdk/electron-main';
-import type { DyteMenuItem } from '@dytesdk/electron-main';
-import './samples/electron-store';
 import './samples/npm-esm-packages';
 
 // Disable GPU Acceleration for Windows 7
@@ -53,11 +51,24 @@ async function createWindow() {
 
 DyteElectron.init(ipcMain, desktopCapturer);
 
+app.on('ready', () => {
+  const filter = {
+    urls: ['*://app.dyte.io/*'],
+  };
+
+  session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
+    console.log(details);
+    details.requestHeaders['Origin'] = 'https://app.dyte.io';
+    details.requestHeaders['Referer'] = 'https://app.dyte.io';
+    callback({ requestHeaders: details.requestHeaders });
+  });
+});
+
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
   win = null;
-  if (process.platform !== 'darwin') app.quit();
+  app.quit();
 });
 
 app.on('second-instance', () => {

@@ -1,107 +1,159 @@
-import { useState, useCallback, useEffect } from 'react';
-import DyteClient from '@dytesdk/web-core/inlined';
-import { DyteMeeting } from '@dytesdk/react-ui-kit';
-import { provideDyteDesignSystem } from '@dytesdk/ui-kit';
+import React, { useState } from 'react';
+import Meeting from './components/Meeting';
+import { addParticipant, createMeeting } from './lib/requests';
+import useInputs from './lib/useInputs';
+
+type CommonProps = {
+  setAction: React.Dispatch<React.SetStateAction<MeetingAction>>;
+};
+
+function MeetingCreate({ setAction }: CommonProps) {
+  const { values, onInput } = useInputs({ name: '', title: '' });
+
+  return (
+    <form
+      className="w-full"
+      onSubmit={async (e) => {
+        e.preventDefault();
+
+        if (values.name.trim() === '' && values.title.trim() === '') return;
+
+        const data = await createMeeting({ title: values.title });
+        if (data) {
+          const authToken = await addParticipant({
+            ...data,
+            displayName: values.name,
+            clientSpecificId: values.name + '-' + Math.random().toString(32).substring(2),
+          });
+          if (authToken) {
+            setAction({
+              type: 'meeting',
+              data: {
+                roomName: data.roomName,
+                authToken: authToken,
+              },
+            });
+          }
+        }
+      }}
+    >
+      <h2>Create a meeting</h2>
+      <div className="form-group">
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={values.name}
+          onInput={onInput('name')}
+        />
+      </div>
+      <div className="form-group">
+        <input
+          type="text"
+          placeholder="Meeting Title"
+          name="title"
+          value={values.title}
+          onInput={onInput('title')}
+        />
+      </div>
+      <div className="form-group">
+        <button type="submit">Create</button>
+      </div>
+    </form>
+  );
+}
+
+function MeetingJoin({ setAction }: CommonProps) {
+  const { values, onInput } = useInputs({ roomName: '', name: '' });
+
+  return (
+    <form
+      className="w-full"
+      onSubmit={async (e) => {
+        e.preventDefault();
+
+        if (values.name.trim() === '' && values.roomName.trim() === '') return;
+
+        const authToken = await addParticipant({
+          roomName: values.roomName,
+          displayName: values.name,
+          clientSpecificId: values.name + '-' + Math.random().toString(32).substring(2),
+        });
+
+        if (authToken) {
+          setAction({
+            type: 'meeting',
+            data: {
+              authToken,
+              roomName: values.roomName,
+            },
+          });
+        }
+      }}
+    >
+      <h2>Join a meeting</h2>
+      <div className="form-group">
+        <input
+          type="text"
+          placeholder="Room Name"
+          name="roomName"
+          value={values.roomName}
+          onInput={onInput('roomName')}
+        />
+      </div>
+
+      <div className="form-group">
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={values.name}
+          onInput={onInput('name')}
+        />
+      </div>
+
+      <div className="form-group">
+        <button type="submit">Join</button>
+      </div>
+    </form>
+  );
+}
+
+export type MeetingAction =
+  | { type: 'create' | 'join' }
+  | { type: 'meeting'; data: { authToken: string; roomName: string } };
 
 const App = () => {
-  const [roomName, setRoomName] = useState<string | null>('rpwont-hgsesv');
-  const [env, setEnv] = useState<string>('staging');
-  const [defaults, setDefaults] = useState<{
-    audio: boolean;
-    video: boolean;
-    showSetupScreen: boolean;
-  }>({
-    audio: false,
-    video: false,
-    showSetupScreen: true,
-  });
-  const [activeMeeting, setActiveMeeting] = useState(false);
+  const [action, setAction] = useState<MeetingAction>({ type: 'create' });
 
-  const handleJoin = async () => {
-    if (!roomName || roomName.trim().length === 0) return;
-
-    const res = await fetch(`https://api.${env}.dyte.in/auth/anonymous`);
-    if (!res.ok) {
-      return;
-    }
-    const authToken = (await res.json()).authToken;
-
-    window.meeting = await DyteClient.init({
-      roomName,
-      apiBase: `https://api.${env}.dyte.in/`,
-      authToken,
-      defaults,
-    });
-    setActiveMeeting(true);
-  };
-
-  handleJoin();
-
-  useEffect(() => {
-    provideDyteDesignSystem(document.body, {
-      colors: {
-        brand: {
-          300: '#00FFE1',
-          400: '#00FFFF',
-          500: '#00E1D4',
-          600: '#007B74',
-          700: '#00655F',
-        },
-        background: {
-          1000: '#FFFFFF',
-          900: '#E6E6E6',
-          800: '#DADADD',
-          700: '#CDCDD0',
-          600: '#C0C0C1',
-        },
-        text: '#071428',
-        'video-bg': '#E5E7EB',
-      },
-    });
-  }, []);
-
-  if (!activeMeeting) {
-    if (!!handleJoin) {
-      return (
-        <div
-          style={{
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          Loading...
-        </div>
-      );
-    }
-    return (
-      <div className="home" style={{ display: 'none' }}>
-        <h2>Enter your meeting ID to join</h2>
-        <div className="meeting-form">
-          <input
-            type="text"
-            value={roomName as string}
-            onChange={(e) => setRoomName(e.currentTarget.value)}
-          />
-          <select name="env" value={env} onChange={(e) => setEnv(e.target.value)}>
-            <option value="staging">Staging</option>
-            <option value="cluster">Prod</option>
-          </select>
-          {/* <button type="submit" onClick={() => handleJoin()}>
-            Join meeting
-          </button> */}
-        </div>
-      </div>
-    );
+  if (action.type === 'meeting') {
+    return <Meeting {...action.data} setAction={setAction} />;
   }
 
-  /**
-   * If everything goes well, show dyte meeting component
-   */
-
-  return <DyteMeeting meeting={window.meeting} />;
+  return (
+    <div className="flex h-full w-full flex-col place-items-center justify-center">
+      <div className="flex w-full max-w-sm flex-col items-center justify-center gap-4">
+        <div role="tabs" className="flex gap-2">
+          <button
+            className="rounded-full bg-zinc-800 px-4 py-2 text-zinc-200"
+            role="tabitem"
+            onClick={() => setAction({ type: 'create' })}
+          >
+            Create
+          </button>
+          <button
+            className="rounded-full bg-zinc-800 px-4 py-2 text-zinc-200"
+            role="tabitem"
+            onClick={() => setAction({ type: 'join' })}
+          >
+            Join
+          </button>
+        </div>
+        {action.type === 'create' && <MeetingCreate setAction={setAction} />}
+        {action.type === 'join' && <MeetingJoin setAction={setAction} />}
+      </div>
+    </div>
+  );
 };
 
 export default App;
