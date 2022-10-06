@@ -14,4 +14,6 @@ const { appendLoading, removeLoading } = useLoading();
 
 contextBridge.exposeInMainWorld('removeLoading', removeLoading);
 
+contextBridge.exposeInMainWorld('openLinkInBrowser', (url: string) => require('electron').shell.openExternal(url));
+
 DyteElectronRenderer.init(contextBridge, ipcRenderer);
