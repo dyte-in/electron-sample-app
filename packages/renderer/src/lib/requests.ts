@@ -1,4 +1,4 @@
-export const ENV: 'staging' | 'app' = 'staging';
+export const ENV: 'staging' | 'app' = 'app';
 const API_BASE = `https://${ENV}.dyte.in`;
 
 interface MeetingCreateForm {
