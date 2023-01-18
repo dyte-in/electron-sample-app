@@ -15,7 +15,6 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
-          token: ${{ secrets.SEMANTIC_RELEASE_PAT }}
 
       - uses: actions/setup-node@v2
         with:
@@ -31,7 +30,7 @@ jobs:
 
       - name: Build package
         env:
-          GH_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
 
       - name: Build confirmation
@@ -39,9 +38,9 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
-          NODE_AUTH_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ENVIRONMENT: ${{ github.ref }}
           GHR: true
         run: npm run semantic-release
